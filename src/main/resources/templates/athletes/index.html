@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Athletes</title>
+</head>
+<body>
+<h3>Athletes</h3>
+<a href="/athletes/new">Create new athlete</a>
+<div th:each="athlete: ${athletes}">
+    <br/>
+    <a th:href="@{/athletes/{id}(id=${athlete.getId()})}"><div th:text="${athlete.getLogin()}"/></a>
+    <br/>
+    <div th:text="${athlete.getName()}"/>
+    <br/>
+    <div th:text="${athlete.getBirthDate()}"/>
+    <br/><br/>
+</div>
+</body>
+</html>

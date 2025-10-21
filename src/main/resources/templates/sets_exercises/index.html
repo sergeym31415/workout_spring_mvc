@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sets exercises</title>
+</head>
+<body>
+<h3>Sets exercises</h3>
+<a href="/sets_exercises/new">Create new set exercise</a>
+<div th:each="set: ${sets}">
+    <a th:href="@{/sets_exercises/{id}(id=${set.getId()})}"> <div th:text="${'Name: '+set.getName()}"/></a>
+
+    <div th:text="${'Number of approache: '+set.getApproache()}"/>
+    <div th:text="${'Repeats: '+set.getCountRepeats()}"/>
+    <div th:text="${'Weight: '+set.getWeight()}"/>
+    <div th:text="${'Exercise: '+set.getExercise().getName()}"/>
+    <br/>
+</div>
+</body>
+</html>

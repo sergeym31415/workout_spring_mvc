@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Set exercise</title>
+</head>
+<body>
+<h3>Set exercise</h3>
+<div th:text="${'id: '+setExercise.getId()}"/>
+<div th:text="${'name: '+setExercise.getName()}"/>
+<div th:text="${'approache: '+setExercise.getApproache()}"/>
+<div th:text="${'repeats: '+setExercise.getCountRepeats()}"/>
+<div th:text="${'weight: '+setExercise.getWeight()}"/>
+<div th:text="${'day of week: '+setExercise.getDayOfWeek()}"/>
+<div th:if="${setExercise.getTrainingProgram()}" th:text="${'training program: '+setExercise.getTrainingProgram().toString()}"/>
+<div th:text="${'exercise: '+setExercise.getExercise().toString()}"/>
+</body>
+</html>

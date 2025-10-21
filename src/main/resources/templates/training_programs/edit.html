@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit training program</title>
+</head>
+<body>
+
+<form th:object="${trainingProgram}" th:method="PATCH" th:action="@{/training_programs/{id}(id=${trainingProgram.getId()})}">
+    <label for="programName">Enter program name: </label>
+    <input type="text" th:field="*{programName}" id="programName"/>
+    <div style="color:red" th:if="${#fields.hasErrors('programName')}" th:errors="*{programName}">Program name Error</div>
+    <br/>
+    <select th:field="*{setOfExercises}" id="sets_id" multiple="multiple">
+        <option th:each="s: ${sets_exercises}" th:value="${s.id}" th:text="${s.getName()}">
+        </option>
+    </select>
+    <input type="submit" value="Update!"/>
+</form>
+
+</body>
+</html>

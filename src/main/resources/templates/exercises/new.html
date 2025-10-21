@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create new exercise</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/exercises}" th:object="${exercise}">
+    <label for="name">Enter exercise name</label>
+    <input type="text" th:field="*{name}" id="name">
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+    <br/>
+    <label for="description">Enter exercise description</label>
+    <div style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</div>
+    <input type="text" th:field="*{description}" id="description">
+    <br/>
+    <input type="submit" value="Create!"/>
+</form>
+
+</body>
+</html>

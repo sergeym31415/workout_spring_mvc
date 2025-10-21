@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit athlete</title>
+</head>
+<body>
+
+<form th:object="${athlete}" th:method="PATCH" th:action="@{/athletes/{id}(id=${athlete.getId()})}">
+    <label for="login">Enter login: </label>
+    <input type="text" th:field="*{login}" id="login"/>
+    <div style="color:red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">login Error</div>
+    <br/>
+    <label for="name">Enter name: </label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name Error</div>
+    <br/>
+    <label for="password">Enter athlete password</label>
+    <input type="password" th:field="*{password}" id="password">
+    <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
+    <br/>
+    <label for="birthDate">Enter athlete birth date(dd/mm/yyyy)</label>
+    <input type="text" th:field="*{birthDate}" id="birthDate">
+    <div style="color:red" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">Birth date Error</div>
+    <label for="bodyWeight">Enter body weight: </label>
+    <input type="text" th:field="*{bodyWeight}" id="bodyWeight"/>
+    <div style="color:red" th:if="${#fields.hasErrors('bodyWeight')}" th:errors="*{bodyWeight}">Body weight error</div>
+    <label for="bodyHeight">Enter body height: </label>
+    <input type="text" th:field="*{bodyHeight}" id="bodyHeight"/>
+    <div style="color:red" th:if="${#fields.hasErrors('bodyHeight')}" th:errors="*{bodyHeight}">Body height error</div>
+    <br/>
+    <label for="trainingProgram">Choose training program: </label>
+    <select th:field="*{trainingProgram}" id="trainingProgram">
+        <option th:each="t: ${training_programs}" th:value="${t.id}" th:text="${t.getProgramName()}">
+        </option>
+        <option th:href="@{/test_url}" label="create new program training" value="">
+            <button></button>
+        </option>
+    </select>
+    <input type="submit" value="Update!"/>
+</form>
+
+</body>
+</html>

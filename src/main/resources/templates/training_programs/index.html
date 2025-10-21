@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Training programs</title>
+</head>
+<body>
+<h3>Training program</h3>
+<a href="/training_programs/new">Create new training program</a>
+<div th:each="training_program: ${training_programs}">
+    <a th:href="@{/training_programs/{id}(id=${training_program.getId()})}">
+        <div th:text="${'id: '+training_program.getId()}"/>
+    </a>
+    <div th:text="${'program name: '+training_program.getProgramName()}"/>
+    <div th:text="${'athletes: '+training_program.getAthletes()}"/>
+    <div>sets of exercises:
+        <ul>
+            <li th:each="set : ${training_program.getSetOfExercises()}" th:text="${set}">
+            </li>
+        </ul>
+    </div>
+
+    <br/>
+</div>
+</body>
+</html>

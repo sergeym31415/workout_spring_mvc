@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Athlete</title>
+</head>
+<body>
+<h3>Athlete</h3>
+<div th:text="${'id: '+athlete.getId()}"/>
+<div th:text="${'login: '+athlete.getLogin()}"/>
+<div th:text="${'name: '+athlete.getName()}"/>
+<div th:text="${'password: '+athlete.getPassword()}"/>
+<div th:text="${'birth date: '+athlete.getBirthDate()}"/>
+<div th:text="${'training program: '+athlete.getTrainingProgram()}"/>
+<div th:text="${'weight: '+athlete.getBodyWeight()}"/>
+<div th:text="${'height: '+athlete.getBodyHeight()}"/>
+<div th:text="${'body mass index: '+athlete.getBodyMassIndex()}"/>
+<a th:href="@{/athletes/{id}/edit(id=${athlete.getId()})}">edit</a>
+</body>
+</html>
