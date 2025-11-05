@@ -12,6 +12,7 @@ import ru.meshkov.workout.models.Athlete;
 import ru.meshkov.workout.models.TrainingProgram;
 import ru.meshkov.workout.services.AthletesService;
 import ru.meshkov.workout.services.TrainingProgramService;
+import ru.meshkov.workout.validators.AthleteValidator;
 
 
 import java.util.List;
@@ -21,11 +22,13 @@ import java.util.List;
 public class AthletesController {
     private final AthletesService athletesService;
     private final TrainingProgramService trainingProgramService;
+    private final AthleteValidator athleteValidator;
 
     @Autowired
-    public AthletesController(AthletesService athletesService, TrainingProgramService trainingProgramService) {
+    public AthletesController(AthletesService athletesService, TrainingProgramService trainingProgramService, AthleteValidator athleteValidator) {
         this.athletesService = athletesService;
         this.trainingProgramService = trainingProgramService;
+        this.athleteValidator = athleteValidator;
     }
 
     @GetMapping()
@@ -52,10 +55,13 @@ public class AthletesController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@PathVariable("id") int id,
-                         @ModelAttribute("athlete") Athlete athlete,
+    public String update(@PathVariable("id") int id, Model model,
+                         @ModelAttribute("athlete") @Valid Athlete athlete,
                          BindingResult bindingResult) {
+        athleteValidator.validate(athlete, bindingResult);
         if (bindingResult.hasErrors()) {
+            List<TrainingProgram> trainingPrograms = trainingProgramService.findAll();
+            model.addAttribute("training_programs", trainingPrograms);
             return "athletes/edit";
         }
         athletesService.save(athlete);
@@ -69,7 +75,7 @@ public class AthletesController {
 
     @PostMapping()
     public String newAthlete(@ModelAttribute("athlete") @Valid Athlete athlete, BindingResult bindingResult) {
-        //athleteValidator.validate(athlete, bindingResult);
+        athleteValidator.validate(athlete, bindingResult);
         if ((bindingResult.hasErrors())) {
             return "athletes/new";
         }

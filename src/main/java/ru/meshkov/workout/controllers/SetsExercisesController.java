@@ -1,5 +1,6 @@
 package ru.meshkov.workout.controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,9 +45,33 @@ public class SetsExercisesController {
     }
 
     @PostMapping()
-    public String newSetExercise(@ModelAttribute("setExercise") SetExercise setExercise, BindingResult bindingResult) {
+    public String newSetExercise(@ModelAttribute("setExercise") @Valid SetExercise setExercise,
+                                 BindingResult bindingResult,
+                                 Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("exercises", exercisesService.findAll());
             return "sets_exercises/new";
+        }
+        setsExercisesService.save(setExercise);
+        return "redirect:/sets_exercises";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable("id") int id, Model model) {
+        SetExercise setExercise = setsExercisesService.findOne(id);
+        model.addAttribute("setExercise", setExercise);
+        model.addAttribute("exercises", exercisesService.findAll());
+        return "sets_exercises/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@PathVariable("id") int id,
+                         Model model,
+                         @ModelAttribute("setExercise") @Valid SetExercise setExercise,
+                         BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("exercises", exercisesService.findAll());
+            return "sets_exercises/edit";
         }
         setsExercisesService.save(setExercise);
         return "redirect:/sets_exercises";

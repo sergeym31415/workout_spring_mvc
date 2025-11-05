@@ -1,9 +1,9 @@
 package ru.meshkov.workout;
 
-import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class WorkoutApplication {
@@ -11,6 +11,11 @@ public class WorkoutApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(WorkoutApplication.class, args);
 
+	}
+
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
 	}
 
 }

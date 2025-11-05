@@ -8,7 +8,7 @@
 <h3>Exercises</h3>
 <a href="/exercises/new">Create new exercise</a>
 <div th:each="exercise: ${exercises}">
-    <div th:text="${exercise.getName()}"/>
+    <a th:href="@{/exercises/{id}(id=${exercise.getId()})}"><div th:text="${exercise.getName()}"/></a>
     <div th:text="${exercise.getDescription()}"/>
     <br/>
 </div>

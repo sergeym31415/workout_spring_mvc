@@ -1,6 +1,7 @@
 package ru.meshkov.workout.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ public class TrainingProgram {
     private int id;
 
     @Column(name = "program_name")
+    @NotEmpty(message = "program name should not be empty")
     private String programName;
 
     @OneToMany(mappedBy = "trainingProgram")

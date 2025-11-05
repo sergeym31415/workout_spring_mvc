@@ -8,13 +8,16 @@
 <h3>Training program</h3>
 <div th:text="${'id: '+trainingProgram.getId()}"/>
 <div th:text="${'program name: '+trainingProgram.getProgramName()}"/>
-<div th:text="${'set of exercises: '+trainingProgram.getSetOfExercises()}"/>
-<div>sets of exercises:
-    <ul>
-        <li th:each="set : ${trainingProgram.getSetOfExercises()}" th:text="${set}">        </li>
-    </ul>
-</div>
 
+<div>sets of exercises:
+    <div th:each="k: ${dict.keySet()}">
+        <p th:text="${k}"></p>
+        <ul>
+            <li th:each="d : ${dict.get(k)}" th:text="${d.getName()}"></li>
+        </ul>
+    </div>
+
+</div>
 
 <div th:text="${'athletes: '+trainingProgram.getAthletes()}"/>
 <a th:href="@{/training_programs/{id}/edit(id=${trainingProgram.getId()})}">edit</a>

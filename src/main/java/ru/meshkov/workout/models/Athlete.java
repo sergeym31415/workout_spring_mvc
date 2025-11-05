@@ -1,7 +1,10 @@
 package ru.meshkov.workout.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.meshkov.workout.utils.UsefulFunctions;
 
@@ -18,12 +21,17 @@ public class Athlete {
 
     @Column(name = "login")
     @NotEmpty(message = "Login could not be empty")
+    @Size(min = 3, message = "Login should be equal or more 3")
     private String login;
 
     @Column(name = "password")
     private String password;
 
+    @Column(name = "role")
+    private String role;
+
     @Column(name = "name")
+    @Size(min = 2, message = "Name should be equal or more 2")
     private String name;
 
     @Column(name = "birth_date")
@@ -32,9 +40,11 @@ public class Athlete {
     private Date birthDate;
 
     @Column(name = "body_weight")
+    @NotNull(message = "should be filled")
     private Double bodyWeight;
 
     @Column(name = "body_height")
+    @NotNull(message = "should be filled")
     private Integer bodyHeight;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -122,6 +132,14 @@ public class Athlete {
 
     public void setBodyHeight(Integer bodyHeight) {
         this.bodyHeight = bodyHeight;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public double getBodyMassIndex() {

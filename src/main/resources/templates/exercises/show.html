@@ -9,5 +9,6 @@
 <div th:text="${exercise.getId()}"/>
 <div th:text="${exercise.getName()}"/>
 <div th:text="${exercise.getDescription()}"/>
+<a th:href="@{/exercises/{id}/edit(id=${exercise.getId()})}">edit</a>
 </body>
 </html>

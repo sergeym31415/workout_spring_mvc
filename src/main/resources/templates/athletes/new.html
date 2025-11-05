@@ -11,18 +11,27 @@
     <input type="text" th:field="*{login}" id="login">
     <div style="color:red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login Error</div>
     <br/>
+    <label for="password">Enter athlete password</label>
+    <input type="password" th:field="*{password}" id="password">
+    <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
+    <br/>
     <label for="name">Enter athlete name</label>
     <input type="text" th:field="*{name}" id="name">
     <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
-    <br/>
-    <label for="password">Enter athlete password</label>
-    <input type="text" th:field="*{password}" id="password">
-    <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
     <br/>
     <label for="birthDate">Enter athlete birth date(dd/mm/yyyy)</label>
     <input type="text" th:field="*{birthDate}" id="birthDate">
     <div style="color:red" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">Birth date Error</div>
     <br/>
+    <label for="bodyWeight">Enter athlete body weight</label>
+    <input type="text" th:field="*{bodyWeight}" id="bodyWeight">
+    <div style="color:red" th:if="${#fields.hasErrors('bodyWeight')}" th:errors="*{bodyWeight}">Body weight Error</div>
+    <br/>
+    <label for="bodyHeight">Enter athlete body height</label>
+    <input type="text" th:field="*{bodyHeight}" id="bodyHeight">
+    <div style="color:red" th:if="${#fields.hasErrors('bodyHeight')}" th:errors="*{bodyHeight}">Body height Error</div>
+    <br/>
+
     <input type="submit" value="Create!"/>
 </form>
 

@@ -3,16 +3,13 @@ package ru.meshkov.workout.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.meshkov.workout.models.Athlete;
 import ru.meshkov.workout.models.SetExercise;
 import ru.meshkov.workout.models.TrainingProgram;
-import ru.meshkov.workout.repositories.AthletesRepository;
 import ru.meshkov.workout.repositories.SetsExercisesRepository;
-import ru.meshkov.workout.utils.AthleteIsAlreadyExistsException;
+import ru.meshkov.workout.utils.DayOfWeekRus;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.time.DayOfWeek;
+import java.util.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -27,9 +24,15 @@ public class SetsExercisesService {
     public List<SetExercise> findAll() {
         return setsExercisesRepository.findAll();
     }
+
     public List<SetExercise> findAllEmpty() {
         return setsExercisesRepository.findByTrainingProgramIsNull();
     }
+
+    public List<SetExercise> findAllNotBusy(int programId) {
+        return setsExercisesRepository.findByIdTrainingProgramIsNotBusy(programId);
+    }
+
 
     public SetExercise findOne(int id) {
         Optional<SetExercise> setExercise = setsExercisesRepository.findById(id);
@@ -38,8 +41,9 @@ public class SetsExercisesService {
 
     @Transactional
     public void setTrainingProgramForListOfSetExercises(List<SetExercise> list, TrainingProgram trainingProgram) {
+        setIdTrainingProgramNullByIdTrainingProgram(trainingProgram.getId());
         for (SetExercise setExercise : list) {
-            SetExercise s  = findOne(setExercise.getId());
+            SetExercise s = findOne(setExercise.getId());
             s.setTrainingProgram(trainingProgram);
         }
     }
@@ -59,5 +63,28 @@ public class SetsExercisesService {
         updatedSetExercise.setDayOfWeek(setExercise.getDayOfWeek());
         updatedSetExercise.setWeight(setExercise.getWeight());
         setsExercisesRepository.save(updatedSetExercise);
+    }
+
+    @Transactional
+    public void setIdTrainingProgramNullByIdTrainingProgram(int idTrainingProgram) {
+        setsExercisesRepository.setIdTrainingProgramNullByIdTrainingProgram(idTrainingProgram);
+    }
+
+    public Map<String, List<SetExercise>> getDictOfSchedule(TrainingProgram trainingProgram) {
+        Map<String, List<SetExercise>> map = new LinkedHashMap<>();
+        List<SetExercise> setExerciseList = setsExercisesRepository.findByTrainingProgramOrderByDayOfWeekAsc(trainingProgram);
+        for (SetExercise setExercise : setExerciseList) {
+            String dayOfWeek = DayOfWeekRus.valueOf(DayOfWeek.of(setExercise.getDayOfWeek()).name()).getTitle();
+            if (map.containsKey(dayOfWeek)) {
+                List list = map.get(dayOfWeek);
+                list.add(setExercise);
+            } else {
+                List<SetExercise> list = new ArrayList<>();
+                list.add(setExercise);
+                map.put(dayOfWeek, list);
+            }
+        }
+
+        return map;
     }
 }

@@ -14,5 +14,7 @@
 <div th:text="${'day of week: '+setExercise.getDayOfWeek()}"/>
 <div th:if="${setExercise.getTrainingProgram()}" th:text="${'training program: '+setExercise.getTrainingProgram().toString()}"/>
 <div th:text="${'exercise: '+setExercise.getExercise().toString()}"/>
+<br/>
+<a th:href="@{/sets_exercises/{id}/edit(id=${setExercise.getId()})}">edit</a>
 </body>
 </html>

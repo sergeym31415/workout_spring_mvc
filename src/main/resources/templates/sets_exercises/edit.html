@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit set exercise</title>
+</head>
+<body>
+
+<form th:object="${setExercise}" th:method="PATCH" th:action="@{/sets_exercises/{id}(id=${setExercise.getId()})}">
+    <label for="name">Enter set exercise name</label>
+    <input type="text" th:field="*{name}" id="name">
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+    <br/>
+    <label for="approache">Enter approache</label>
+    <div style="color:red" th:if="${#fields.hasErrors('approache')}" th:errors="*{approache}">Approache Error</div>
+    <input type="text" th:field="*{approache}" id="approache">
+    <br/>
+    <label for="repeats">Enter repeats</label>
+    <div style="color:red" th:if="${#fields.hasErrors('countRepeats')}" th:errors="*{countRepeats}">Repeats Error</div>
+    <input type="text" th:field="*{countRepeats}" id="repeats">
+    <br/>
+    <label for="weight">Enter weight</label>
+    <div style="color:red" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}">weight Error</div>
+    <input type="text" th:field="*{weight}" id="weight">
+    <br/>
+    <label for="dayOfWeek">Enter day of week</label>
+    <div style="color:red" th:if="${#fields.hasErrors('dayOfWeek')}" th:errors="*{dayOfWeek}">dayOfWeek Error</div>
+    <input type="text" th:field="*{dayOfWeek}" id="dayOfWeek">
+    <br/>
+    <label for="exercise">Choose exercise</label>
+    <select th:field="*{exercise}" id="exercise">
+        <option th:each="e: ${exercises}" th:value="${e.getId()}" th:text="${e.getName()}">
+        </option>
+    </select>
+    <br/>
+    <input type="submit" value="Update!"/>
+</form>
+
+</body>
+</html>

@@ -1,5 +1,6 @@
 package ru.meshkov.workout.controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +11,7 @@ import ru.meshkov.workout.models.TrainingProgram;
 import ru.meshkov.workout.services.SetsExercisesService;
 import ru.meshkov.workout.services.TrainingProgramService;
 
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/training_programs")
@@ -35,37 +36,30 @@ public class TrainingProgramController {
     public String show(@PathVariable("id") int id, Model model) {
         TrainingProgram trainingProgram = trainingProgramService.findById(id);
         model.addAttribute("trainingProgram", trainingProgram);
+        model.addAttribute("dict", setsExercisesService.getDictOfSchedule(trainingProgram));
         return "training_programs/show";
     }
 
     @GetMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable("id") int id//,
-                       //@ModelAttribute("setExercice") SetExercise setExercise
-    ) {
+    public String edit(Model model, @PathVariable("id") int id) {
         TrainingProgram trainingProgram = trainingProgramService.findById(id);
-        List<SetExercise> sets_exercises = setsExercisesService.findAllEmpty();
+        List<SetExercise> sets_exercises = setsExercisesService.findAllNotBusy(id);
         model.addAttribute("trainingProgram", trainingProgram);
         model.addAttribute("sets_exercises", sets_exercises);
         return "training_programs/edit";
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("trainingProgram") TrainingProgram trainingProgram,
-                         //@ModelAttribute("setExercice") SetExercise setExercice,
+    public String update(@ModelAttribute("trainingProgram") @Valid TrainingProgram trainingProgram,
                          BindingResult bindingResult,
+                         Model model,
                          @PathVariable("id") int id) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("sets_exercises", setsExercisesService.findAllNotBusy(id));
             return "training_programs/edit";
         }
-
         trainingProgram = trainingProgramService.update(id, trainingProgram);
         setsExercisesService.setTrainingProgramForListOfSetExercises(trainingProgram.getSetOfExercises(), trainingProgram);
-//        SetExercise setExerciceNew = setsExercisesService.findOne(setExercice.getId());
-//        setExerciceNew.setTrainingProgram(trainingProgram);
-//        List<SetExercise> list = trainingProgram.getSetOfExercises();
-//        list.add(setExerciceNew);
-//        trainingProgram.setSetOfExercises(list);
-//        setsExercisesService.save(setExerciceNew);
         return "redirect:/training_programs";
     }
 

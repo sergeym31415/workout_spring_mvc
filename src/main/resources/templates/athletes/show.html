@@ -11,7 +11,12 @@
 <div th:text="${'name: '+athlete.getName()}"/>
 <div th:text="${'password: '+athlete.getPassword()}"/>
 <div th:text="${'birth date: '+athlete.getBirthDate()}"/>
-<div th:text="${'training program: '+athlete.getTrainingProgram()}"/>
+<div th:if="${athlete.getTrainingProgram()}">
+    <a th:href="@{/training_programs/{id}(id=${athlete.getTrainingProgram().getId()})}">
+        <div th:text="${'training program: '+athlete.getTrainingProgram()}"/>
+    </a>
+</div>
+
 <div th:text="${'weight: '+athlete.getBodyWeight()}"/>
 <div th:text="${'height: '+athlete.getBodyHeight()}"/>
 <div th:text="${'body mass index: '+athlete.getBodyMassIndex()}"/>

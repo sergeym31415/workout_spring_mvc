@@ -3,12 +3,14 @@ package ru.meshkov.workout.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.meshkov.workout.models.SetExercise;
 import ru.meshkov.workout.models.TrainingProgram;
 import ru.meshkov.workout.repositories.TrainingProgramRepository;
 
-import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 
 @Service
 @Transactional(readOnly = true)
@@ -44,4 +46,6 @@ public class TrainingProgramService {
         trainingProgramRepository.save(updatedTrainingProgram);
         return updatedTrainingProgram;
     }
+
+
 }

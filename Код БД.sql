@@ -3,6 +3,7 @@ create table athlete(
     login varchar(100) unique not null,
     password varchar not null,
     name varchar(100) not null,
+    role varchar(30) not null,
     birth_date date not null,
 	body_weight DOUBLE PRECISION,
 	body_height DOUBLE PRECISION,

@@ -24,9 +24,6 @@ public class ExercisesController {
     @GetMapping()
     public String index(Model model) {
         List<Exercise> exercises = exercisesService.findAll();
-        for (Exercise exercise : exercises) {
-            System.out.println(exercise);
-        }
         model.addAttribute("exercises", exercises);
         return "exercises/index";
     }
@@ -40,7 +37,7 @@ public class ExercisesController {
 
     @PostMapping()
     public String newExercise(@ModelAttribute("exercise") @Valid Exercise exercise, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "exercises/new";
         }
         exercisesService.save(exercise);
@@ -50,6 +47,22 @@ public class ExercisesController {
     @GetMapping("/new")
     public String create(@ModelAttribute("exercise") Exercise exercise) {
         return "exercises/new";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable("id") int id, Model model) {
+        Exercise exercise = exercisesService.findOne(id);
+        model.addAttribute("exercise", exercise);
+        return "exercises/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@PathVariable("id") int id, @ModelAttribute @Valid Exercise exercise, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "exercises/edit";
+        }
+        exercisesService.save(exercise);
+        return "redirect:/exercises";
     }
 
 }
