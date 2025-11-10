@@ -6,10 +6,8 @@
 </head>
 <body>
 <h3>Athlete</h3>
-<div th:text="${'id: '+athlete.getId()}"/>
 <div th:text="${'login: '+athlete.getLogin()}"/>
 <div th:text="${'name: '+athlete.getName()}"/>
-<div th:text="${'password: '+athlete.getPassword()}"/>
 <div th:text="${'birth date: '+athlete.getBirthDate()}"/>
 <div th:if="${athlete.getTrainingProgram()}">
     <a th:href="@{/training_programs/{id}(id=${athlete.getTrainingProgram().getId()})}">

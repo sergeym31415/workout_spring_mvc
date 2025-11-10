@@ -142,13 +142,7 @@ public class Athlete {
         this.role = role;
     }
 
-    public double getBodyMassIndex() {
-        if(bodyHeight == null || bodyWeight == null || bodyHeight == 0 || bodyWeight == 0) {
-            return -1;
-        }
-        double bmi = bodyWeight / ((bodyHeight / 100.0) * (bodyHeight / 100.0));
-        return UsefulFunctions.round(bmi, 2);
-    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

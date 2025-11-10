@@ -26,6 +26,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/auth/**", "/athletes/**").permitAll() // Allow access to /public/** without authentication
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated() // All other requests require authentication
                 )
                 .formLogin(form -> form // Configure form-based login

@@ -12,6 +12,7 @@ import java.util.Collections;
 public class AthleteDetails implements UserDetails {
 
     private final Athlete athlete;
+    private final static String ROLE_ADMIN = "ROLE_ADMIN";
 
     public AthleteDetails(Athlete athlete) {
         this.athlete = athlete;
@@ -20,6 +21,14 @@ public class AthleteDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(athlete.getRole()));
+    }
+
+    public boolean isAdmin() {
+        return athlete.getRole().equals(ROLE_ADMIN);
+    }
+
+    public boolean isCurrentUserById(int id) {
+        return id == athlete.getId();
     }
 
     @Override

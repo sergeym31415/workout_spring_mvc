@@ -1,16 +1,20 @@
 package ru.meshkov.workout.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.meshkov.workout.models.TrainingProgram;
+import ru.meshkov.workout.utils.UsefulFunctions;
 
 import java.util.Date;
 
 public class AthleteDTO {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
     @NotEmpty(message = "Login could not be empty")
     @Size(min = 3, message = "Login should be equal or more 3")
     private String login;
@@ -31,6 +35,16 @@ public class AthleteDTO {
 
     @NotNull(message = "should be filled")
     private Integer bodyHeight;
+
+    private TrainingProgram trainingProgram;
+
+    public TrainingProgram getTrainingProgram() {
+        return trainingProgram;
+    }
+
+    public void setTrainingProgram(TrainingProgram trainingProgram) {
+        this.trainingProgram = trainingProgram;
+    }
 
     public String getLogin() {
         return login;
@@ -86,5 +100,21 @@ public class AthleteDTO {
 
     public void setBodyHeight(Integer bodyHeight) {
         this.bodyHeight = bodyHeight;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public double getBodyMassIndex() {
+        if(bodyHeight == null || bodyWeight == null || bodyHeight == 0 || bodyWeight == 0) {
+            return -1;
+        }
+        double bmi = bodyWeight / ((bodyHeight / 100.0) * (bodyHeight / 100.0));
+        return UsefulFunctions.round(bmi, 2);
     }
 }

@@ -31,7 +31,7 @@ public class RestAthletesController {
 
     @GetMapping("/athletes/{id}")
     public AthleteDTO getAthleteById(@PathVariable("id") int id) {
-        Athlete athlete = athletesService.findOne(id);
+        Athlete athlete = athletesService.findOne(id).get();
         AthleteDTO athleteDTO = convertToAthleteDTO(athlete);
         return athleteDTO;
     }

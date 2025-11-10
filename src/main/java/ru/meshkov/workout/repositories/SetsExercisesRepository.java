@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.meshkov.workout.models.Athlete;
 import ru.meshkov.workout.models.SetExercise;
 import ru.meshkov.workout.models.TrainingProgram;
@@ -23,8 +24,14 @@ public interface SetsExercisesRepository extends JpaRepository<SetExercise, Inte
     List<SetExercise> findByIdTrainingProgramIsNotBusy(@Param("idTrainingProgram") int idTrainingProgram);
 
     @Modifying
+    @Transactional
     @Query(value = "UPDATE set_exercises SET id_training_program=null WHERE id_training_program = :idTrainingProgram", nativeQuery = true)
     void setIdTrainingProgramNullByIdTrainingProgram(@Param("idTrainingProgram") int idTrainingProgram);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE set_exercises SET id_training_program=:idTrainingProgram WHERE id IN :ids", nativeQuery = true)
+    void setIdTrainingProgramForList(@Param("idTrainingProgram") int idTrainingProgram, @Param("ids") List<Integer> ids);
 
 
 }

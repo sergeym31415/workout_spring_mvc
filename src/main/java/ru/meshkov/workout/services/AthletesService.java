@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.meshkov.workout.models.Athlete;
 import ru.meshkov.workout.repositories.AthletesRepository;
 import ru.meshkov.workout.utils.AthleteIsAlreadyExistsException;
+import ru.meshkov.workout.utils.AthleteNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,9 +28,9 @@ public class AthletesService {
         return athletesRepository.findAll();
     }
 
-    public Athlete findOne(int id) {
+    public Optional<Athlete> findOne(int id) throws AthleteNotFoundException {
         Optional<Athlete> athlete = athletesRepository.findById(id);
-        return athlete.orElse(null);
+        return athlete;
     }
 
     public Optional<Athlete> findByLogin(String login) {

@@ -41,11 +41,11 @@ public class SetsExercisesService {
 
     @Transactional
     public void setTrainingProgramForListOfSetExercises(List<SetExercise> list, TrainingProgram trainingProgram) {
-        setIdTrainingProgramNullByIdTrainingProgram(trainingProgram.getId());
-        for (SetExercise setExercise : list) {
-            SetExercise s = findOne(setExercise.getId());
-            s.setTrainingProgram(trainingProgram);
-        }
+        setsExercisesRepository.setIdTrainingProgramNullByIdTrainingProgram(trainingProgram.getId());
+        setsExercisesRepository.setIdTrainingProgramForList(trainingProgram.getId(),
+                list.stream()
+                .map(s -> s.getId())
+                .toList());
     }
 
     @Transactional
@@ -63,11 +63,6 @@ public class SetsExercisesService {
         updatedSetExercise.setDayOfWeek(setExercise.getDayOfWeek());
         updatedSetExercise.setWeight(setExercise.getWeight());
         setsExercisesRepository.save(updatedSetExercise);
-    }
-
-    @Transactional
-    public void setIdTrainingProgramNullByIdTrainingProgram(int idTrainingProgram) {
-        setsExercisesRepository.setIdTrainingProgramNullByIdTrainingProgram(idTrainingProgram);
     }
 
     public Map<String, List<SetExercise>> getDictOfSchedule(TrainingProgram trainingProgram) {
