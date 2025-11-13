@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create new done exercise</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/athletes/{athleteId}/done_exercise(athleteId=${athlete.getId()})}" th:object="${done_exercise}">
+    <label for="exercise">Choose exercise name</label>
+    <select th:field="*{exercise}" id="exercise">
+        <option th:each="e: ${exercises}" th:value="${e.getId()}" th:text="${e.getName()}">
+        </option>
+    </select>
+    <br/>
+    <label for="repeats">Enter count of repeats</label>
+    <div style="color:red" th:if="${#fields.hasErrors('repeats')}" th:errors="*{repeats}">Repeats Error
+    </div>
+    <input type="text" th:field="*{repeats}" id="repeats">
+    <br/>
+    <label for="weight">Enter weight</label>
+    <div style="color:red" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}">weight Error</div>
+    <input type="text" th:field="*{weight}" id="weight">
+    <input type="hidden" th:field="*{athlete}" id="athlete" th:value="${athlete}">
+    <br/>
+
+    <input type="submit" value="Create!"/>
+</form>
+
+</body>
+</html>

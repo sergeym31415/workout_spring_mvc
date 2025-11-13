@@ -32,7 +32,7 @@ create TABLE set_exercises(
 	day_of_week int,
 	id_exercise int not null,
 	FOREIGN KEY(id_exercise) REFERENCES exercise(id),
-	id_training_program int not NULL,
+	id_training_program int,
 	FOREIGN KEY(id_training_program) REFERENCES training_program(id)
 );
 
@@ -52,7 +52,9 @@ CREATE TABLE done_exercises(
 	FOREIGN KEY(id_athlete) REFERENCES athlete(id),
 	id_exercise int NOT NULL,
 	FOREIGN KEY(id_exercise) REFERENCES exercise(id),
-	done_date TIMESTAMP
+	done_date TIMESTAMP,
+	repeats int,
+	weight double precision
 );
 
 CREATE TABLE records(
@@ -62,7 +64,7 @@ CREATE TABLE records(
 	id_exercise int NOT NULL,
 	FOREIGN KEY(id_exercise) REFERENCES exercise(id),
 	done_date TIMESTAMP,
-	repeat int,
+	repeats int,
 	weight DOUBLE PRECISION,
-	duration int
+	CONSTRAINT composite_key UNIQUE (id_athlete, id_exercise, repeats, weight)
 );

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Done exercises</title>
+</head>
+<body>
+<h3>Done exercises</h3>
+<a href="/done_exercises/new">Rec new done exercise</a>
+<div th:each="done_exercise: ${doneExerciseList}">
+    <a th:href="@{/done_exercises/{id}(id=${done_exercise.getId()})}"><div th:text="${done_exercise.getExercise()}"/></a>
+    <div th:text="${done_exercise.getDoneDate()}"/>
+    <br/>
+</div>
+</body>
+</html>

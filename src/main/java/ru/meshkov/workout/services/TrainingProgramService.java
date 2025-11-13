@@ -3,6 +3,7 @@ package ru.meshkov.workout.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.meshkov.workout.models.Athlete;
 import ru.meshkov.workout.models.SetExercise;
 import ru.meshkov.workout.models.TrainingProgram;
 import ru.meshkov.workout.repositories.TrainingProgramRepository;
@@ -26,6 +27,8 @@ public class TrainingProgramService {
         Optional<TrainingProgram> trainingProgram = trainingProgramRepository.findById(id);
         return trainingProgram.orElse(null);
     }
+
+
 
     public List<TrainingProgram> findAll() {
         List<TrainingProgram> trainingPrograms = trainingProgramRepository.findAll();

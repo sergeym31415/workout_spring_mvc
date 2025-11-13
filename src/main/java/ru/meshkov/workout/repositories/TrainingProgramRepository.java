@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.meshkov.workout.models.TrainingProgram;
 
+import java.util.Optional;
+
 @Repository
 public interface TrainingProgramRepository extends JpaRepository<TrainingProgram, Integer> {
 }
