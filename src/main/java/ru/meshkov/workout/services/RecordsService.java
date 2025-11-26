@@ -3,9 +3,11 @@ package ru.meshkov.workout.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.meshkov.workout.models.Athlete;
 import ru.meshkov.workout.models.Record;
 import ru.meshkov.workout.repositories.RecordsRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,6 +37,16 @@ public class RecordsService {
         boolean isRecord = record.getRepeats() > 0 && record.getRepeats() > getMaxRepeatsByWeight(
                 record.getAthlete().getId(), record.getExercise().getId(), record.getWeight());
         return isRecord;
+    }
+
+    public List<Record> findAll() {
+        return recordsRepository.findAll();
+    }
+
+    public List<Record> findAllByAthlete(Athlete athlete) {return recordsRepository.findAllByAthlete(athlete);}
+
+    public Optional<Record> findById(int id) {
+        return recordsRepository.findById(id);
     }
 
 }

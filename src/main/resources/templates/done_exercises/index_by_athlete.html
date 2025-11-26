@@ -5,9 +5,12 @@
     <title>Done exercises</title>
 </head>
 <body>
-<h3>Done exercises</h3>
+<h3>Done exercises by athlete </h3>
+<h3 th:text="${athlete.getName()}"/>
 <div th:each="done_exercise: ${doneExerciseList}">
-    <a th:href="@{/done_exercises/{id}(id=${done_exercise.getId()})}"><div th:text="${done_exercise.getExercise()}"/></a>
+    <a th:href="@{/athletes/{athleteId}/done_exercises/{id}(athleteId=${athlete.getId()}, id=${done_exercise.getId()})}">
+        <div th:text="${done_exercise.getExercise()}"/>
+    </a>
     <div th:text="${done_exercise.getDoneDate()}"/>
     <br/>
 </div>

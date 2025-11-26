@@ -44,7 +44,7 @@ public class TrainingProgramService {
     public TrainingProgram update(int id, TrainingProgram trainingProgram) {
         TrainingProgram updatedTrainingProgram = findById(id);
         updatedTrainingProgram.setProgramName(trainingProgram.getProgramName());
-        updatedTrainingProgram.setAthletes(trainingProgram.getAthletes());
+        //updatedTrainingProgram.setAthletes(trainingProgram.getAthletes());
         updatedTrainingProgram.setSetOfExercises(trainingProgram.getSetOfExercises());
         trainingProgramRepository.save(updatedTrainingProgram);
         return updatedTrainingProgram;

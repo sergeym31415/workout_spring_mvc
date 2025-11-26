@@ -1,4 +1,4 @@
-package ru.meshkov.workout.utils;
+package ru.meshkov.workout.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

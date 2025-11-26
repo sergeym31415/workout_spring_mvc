@@ -1,14 +1,15 @@
 package ru.meshkov.workout.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.meshkov.workout.models.Athlete;
 import ru.meshkov.workout.models.TrainingProgram;
 import ru.meshkov.workout.repositories.AthletesRepository;
-import ru.meshkov.workout.utils.AthleteIsAlreadyExistsException;
-import ru.meshkov.workout.utils.AthleteNotFoundException;
+import ru.meshkov.workout.exceptions.AthleteIsAlreadyExistsException;
+import ru.meshkov.workout.exceptions.AthleteNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,10 +33,12 @@ public class AthletesService {
         this.trainingProgramService = trainingProgramService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Athlete> findAll() {
         return athletesRepository.findAll();
     }
 
+    @PreAuthorize("hasRole('ADMIN') or authentication.principal.getId() == #id")
     public Optional<Athlete> findOne(int id) throws AthleteNotFoundException {
         Optional<Athlete> athlete = athletesRepository.findById(id);
         return athlete;
@@ -57,7 +60,7 @@ public class AthletesService {
     public void save(Athlete athlete) {
         String encodedPassword = passwordEncoder.encode(athlete.getPassword());
         athlete.setPassword(encodedPassword);
-        athlete.setRole("USER");
+        athlete.setRole("ROLE_USER");
 
         boolean isNewAthlete = athlete.getId() == 0;
         if (!isNewAthlete) {

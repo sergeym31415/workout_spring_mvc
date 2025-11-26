@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Records</title>
+</head>
+<body>
+<h3>Records</h3>
+<div th:each="record: ${records}">
+    <a th:href="@{/records/{id}(id=${record.getId()})}"><div th:text="${record.getExercise()}"/></a>
+    <div th:text="${record.getDoneDate()}"/>
+    <br/>
+</div>
+</body>
+</html>

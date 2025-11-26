@@ -1,78 +1,9 @@
-<?xml version="1.1" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-    <changeSet author="neo (generated)" id="1762795239946-1">
-        <createTable tableName="athlete">
-            <column autoIncrement="true" name="id" type="INTEGER">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="athlete_pkey"/>
-            </column>
-            <column name="login" type="VARCHAR(100)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="password" type="VARCHAR">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="VARCHAR(100)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="role" type="VARCHAR(30)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="birth_date" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="body_weight" type="FLOAT8"/>
-            <column name="body_height" type="FLOAT8"/>
-            <column name="id_training_program" type="INTEGER"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="neo (generated)" id="1762795239946-2">
-        <createTable tableName="exercise">
-            <column autoIncrement="true" name="id" type="INTEGER">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="exercise_pkey"/>
-            </column>
-            <column name="name" type="VARCHAR(100)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="description" type="VARCHAR(200)"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="neo (generated)" id="1762795239946-4">
-        <addUniqueConstraint columnNames="login" constraintName="athlete_login_key" tableName="athlete"/>
-    </changeSet>
-    <changeSet author="neo (generated)" id="1762795239946-5">
-        <addUniqueConstraint columnNames="name" constraintName="exercise_name_key" tableName="exercise"/>
-    </changeSet>
-    <changeSet author="neo (generated)" id="1762795239946-7">
-        <createTable tableName="set_exercises">
-            <column autoIncrement="true" name="id" type="INTEGER">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="set_exercises_pkey"/>
-            </column>
-            <column name="name" type="VARCHAR(100)"/>
-            <column name="approache" type="INTEGER"/>
-            <column name="repeats" type="INTEGER"/>
-            <column name="weight" type="FLOAT8"/>
-            <column name="day_of_week" type="INTEGER"/>
-            <column name="id_exercise" type="INTEGER">
-                <constraints nullable="false"/>
-            </column>
-            <column name="id_training_program" type="INTEGER"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="neo (generated)" id="1762795239946-8">
-        <createTable tableName="training_program">
-            <column autoIncrement="true" name="id" type="INTEGER">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="training_program_pkey"/>
-            </column>
-            <column name="program_name" type="VARCHAR(100)"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="neo (generated)" id="1762795239946-9">
-        <addForeignKeyConstraint baseColumnNames="id_training_program" baseTableName="athlete" constraintName="athlete_id_training_program_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="training_program" validate="true"/>
-    </changeSet>
-    <changeSet author="neo (generated)" id="1762795239946-10">
-        <addForeignKeyConstraint baseColumnNames="id_exercise" baseTableName="set_exercises" constraintName="set_exercises_id_exercise_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="exercise" validate="true"/>
-    </changeSet>
-    <changeSet author="neo (generated)" id="1762795239946-11">
-        <addForeignKeyConstraint baseColumnNames="id_training_program" baseTableName="set_exercises" constraintName="set_exercises_id_training_program_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="training_program" validate="true"/>
-    </changeSet>
+<?xml version="1.1" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <include file="v.1.0.0/changelog.xml" relativeToChangelogFile="true"/>
+
 </databaseChangeLog>

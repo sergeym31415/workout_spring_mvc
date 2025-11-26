@@ -19,8 +19,8 @@ public class TrainingProgram {
     @NotEmpty(message = "program name should not be empty")
     private String programName;
 
-    @OneToMany(mappedBy = "trainingProgram")
-    private List<Athlete> athletes;
+//    @OneToMany(mappedBy = "trainingProgram")
+//    private List<Athlete> athletes;
 
     @OneToMany(mappedBy = "trainingProgram")
     private List<SetExercise> setOfExercises = new ArrayList<>();
@@ -33,13 +33,13 @@ public class TrainingProgram {
         this.id = id;
     }
 
-    public List<Athlete> getAthletes() {
-        return athletes;
-    }
+   // public List<Athlete> getAthletes() {
+   //     return athletes;
+  //  }
 
-    public void setAthletes(List<Athlete> athletes) {
-        this.athletes = athletes;
-    }
+  //  public void setAthletes(List<Athlete> athletes) {
+   //     this.athletes = athletes;
+  //  }
 
     public List<SetExercise> getSetOfExercises() {
         return setOfExercises;

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Done exercises</title>
+</head>
+<body>
+<h3>Records by athlete </h3>
+<h3 th:text="${athlete.getName()}"/>
+<div th:each="record: ${records}">
+    <a th:href="@{/athletes/{athleteId}/records/{id}(athleteId=${athlete.getId()}, id=${record.getId()})}">
+        <div th:text="${record}"/>
+    </a>
+    <br/>
+</div>
+</body>
+</html>

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -19,14 +20,15 @@ import ru.meshkov.workout.security.AthleteDetailsService;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/auth/**", "/athletes/**").permitAll() // Allow access to /public/** without authentication
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/auth/**","/api/**").permitAll() // Allow access to /public/** without authentication
+                        .requestMatchers("/admin/**", "/exercises/**", "/sets_exercises/**", "/training_programs/**", "/done_exercises/**").hasRole("ADMIN")
                         .anyRequest().authenticated() // All other requests require authentication
                 )
                 .formLogin(form -> form // Configure form-based login

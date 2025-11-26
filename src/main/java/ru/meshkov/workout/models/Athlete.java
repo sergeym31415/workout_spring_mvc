@@ -47,7 +47,7 @@ public class Athlete {
     @NotNull(message = "should be filled")
     private Integer bodyHeight;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_training_program")
     private TrainingProgram trainingProgram;
 

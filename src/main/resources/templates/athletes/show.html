@@ -18,8 +18,9 @@
 <div th:text="${'weight: '+athlete.getBodyWeight()}"/>
 <div th:text="${'height: '+athlete.getBodyHeight()}"/>
 <div th:text="${'body mass index: '+athlete.getBodyMassIndex()}"/>
-<a th:href="@{/athletes/{id}/done_exercise(id=${athlete.getId()})}">add done exercise</a>
-<br/>
+<a th:href="@{/athletes/{id}/done_exercise(id=${athlete.getId()})}">add done exercise</a><br/>
+<a th:href="@{/athletes/{id}/done_exercises(id=${athlete.getId()})}">show done exercises</a><br/>
+<a th:href="@{/athletes/{id}/records(id=${athlete.getId()})}">show personal records</a><br/>
 <a th:href="@{/athletes/{id}/edit(id=${athlete.getId()})}">edit</a>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package ru.meshkov.workout.utils;
+package ru.meshkov.workout.exceptions;
 
 public class AthleteIsAlreadyExistsException extends RuntimeException {
     public AthleteIsAlreadyExistsException(String msg) {

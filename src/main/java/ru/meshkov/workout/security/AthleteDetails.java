@@ -13,6 +13,7 @@ public class AthleteDetails implements UserDetails {
 
     private final Athlete athlete;
     private final static String ROLE_ADMIN = "ROLE_ADMIN";
+    private final static String ROLE_USER = "ROLE_USER";
 
     public AthleteDetails(Athlete athlete) {
         this.athlete = athlete;
@@ -23,6 +24,9 @@ public class AthleteDetails implements UserDetails {
         return Collections.singletonList(new SimpleGrantedAuthority(athlete.getRole()));
     }
 
+    public int getId() {
+        return athlete.getId();
+    }
     public boolean isAdmin() {
         return athlete.getRole().equals(ROLE_ADMIN);
     }

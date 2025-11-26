@@ -7,15 +7,13 @@
 <body>
 <h3>Main page</h3><br/>
 <p th:text="${'Your login: '+username}"/>
+<p><a th:href="@{/athletes/{id}(id=${idAthlete})}">Your profile</a></p>
 <p th:text="${'Your authorities: '+autorities}"/>
 <a th:if="${isAdmin == true}" href="/admin">admin page</a>
 <form th:action="@{/auth/logout}" th:method="POST">
     <input type="submit" value="Logout"/>
 </form>
 <br/>
-<a href="/athletes">athletes</a><br/>
-<a href="/exercises">exercises</a><br/>
-<a href="/sets_exercises">sets exercises</a><br/>
-<a href="/training_programs">training programs</a>
+
 </body>
 </html>

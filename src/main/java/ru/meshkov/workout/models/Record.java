@@ -98,4 +98,14 @@ public class Record {
         return record;
     }
 
+    @Override
+    public String toString() {
+        return "Record{" +
+                "athlete=" + athlete +
+                ", exercise=" + exercise +
+                ", doneDate=" + doneDate +
+                ", repeats=" + repeats +
+                ", weight=" + weight +
+                '}';
+    }
 }

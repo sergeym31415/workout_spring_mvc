@@ -23,6 +23,7 @@ public class MainController {
 
         model.addAttribute("username", username);
         model.addAttribute("autorities", athleteDetails.getAuthorities());
+        model.addAttribute("idAthlete", athleteDetails.getId());
         model.addAttribute("isAdmin", isAdmin);
         return "main_page";
     }

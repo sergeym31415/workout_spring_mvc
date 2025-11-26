@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,16 +13,15 @@ import org.springframework.validation.BindingResult;
 
 import org.springframework.web.bind.annotation.*;
 import ru.meshkov.workout.dto.AthleteDTO;
+import ru.meshkov.workout.exceptions.DoneExerciseNotFoundException;
 import ru.meshkov.workout.models.Athlete;
 import ru.meshkov.workout.models.DoneExercise;
 import ru.meshkov.workout.models.Exercise;
+import ru.meshkov.workout.models.Record;
 import ru.meshkov.workout.models.TrainingProgram;
 import ru.meshkov.workout.security.AthleteDetails;
-import ru.meshkov.workout.services.AthletesService;
-import ru.meshkov.workout.services.DoneExerciseService;
-import ru.meshkov.workout.services.ExercisesService;
-import ru.meshkov.workout.services.TrainingProgramService;
-import ru.meshkov.workout.utils.AthleteNotFoundException;
+import ru.meshkov.workout.services.*;
+import ru.meshkov.workout.exceptions.AthleteNotFoundException;
 import ru.meshkov.workout.validators.AthleteValidator;
 
 
@@ -37,6 +37,7 @@ public class AthletesController {
 
     private final ExercisesService exercisesService;
     private final DoneExerciseService doneExerciseService;
+    private final RecordsService recordsService;
     private final AthleteValidator athleteValidator;
     private final ModelMapper modelMapper;
 
@@ -46,6 +47,7 @@ public class AthletesController {
                               DoneExerciseService doneExerciseService,
                               ExercisesService exercisesService,
                               AthleteValidator athleteValidator,
+                              RecordsService recordsService,
                               ModelMapper modelMapper) {
         this.athletesService = athletesService;
         this.trainingProgramService = trainingProgramService;
@@ -53,6 +55,7 @@ public class AthletesController {
         this.modelMapper = modelMapper;
         this.doneExerciseService = doneExerciseService;
         this.exercisesService = exercisesService;
+        this.recordsService = recordsService;
     }
 
     @ExceptionHandler(AthleteNotFoundException.class)
@@ -144,8 +147,8 @@ public class AthletesController {
                                    @ModelAttribute("done_exercise") @Valid DoneExercise doneExercise,
                                    BindingResult bindingResult,
                                    Model model
-                                  ) {
-        if(bindingResult.hasErrors()) {
+    ) {
+        if (bindingResult.hasErrors()) {
             Optional<Athlete> athlete = athletesService.findOne(athleteId);
             doneExercise.setAthlete(athlete.get());
             model.addAttribute("athlete", athlete.get());
@@ -156,5 +159,49 @@ public class AthletesController {
         doneExercise.setDoneDate(new Date());
         doneExerciseService.save(doneExercise);
         return "redirect:/athletes/{athleteId}";
+    }
+
+    @GetMapping("/{athleteId}/done_exercises")
+    public String showDoneExercises(@PathVariable("athleteId") int athleteId, Model model) throws AthleteNotFoundException {
+        Optional<Athlete> athlete = athletesService.findOne(athleteId);
+        if(athlete.isEmpty()) {
+            throw new AthleteNotFoundException("");
+        }
+        List<DoneExercise> doneExerciseList = doneExerciseService.findAllByAthlete(athlete.get());
+        model.addAttribute("doneExerciseList", doneExerciseList);
+        model.addAttribute("athlete", athlete.get());
+        return "done_exercises/index_by_athlete";
+    }
+
+    @GetMapping("/{athleteId}/done_exercises/{id}")
+    public String showDoneExercise(Model model, @PathVariable("id") int id, @PathVariable("athleteId") int athleteId) throws DoneExerciseNotFoundException {
+        Optional<DoneExercise> optionalDoneExercise = doneExerciseService.findById(id, athleteId);
+        if(optionalDoneExercise.isPresent()) {
+            DoneExercise doneExercise = optionalDoneExercise.get();
+            model.addAttribute("doneExercise", doneExercise);
+            return "done_exercises/show";
+        } else throw new DoneExerciseNotFoundException("");
+    }
+
+    @GetMapping("/{athleteId}/records")
+    public String showPersonalRecords(@PathVariable("athleteId") int athleteId, Model model) throws AthleteNotFoundException {
+        Optional<Athlete> athlete = athletesService.findOne(athleteId);
+        if(athlete.isEmpty()) {
+            throw new AthleteNotFoundException("");
+        }
+        List<Record> records = recordsService.findAllByAthlete(athlete.get());
+        model.addAttribute("records", records);
+        model.addAttribute("athlete", athlete.get());
+        return "records/index_by_athlete";
+    }
+
+    @GetMapping("/{athleteId}/records/{id}")
+    public String showPersonalRecord(Model model, @PathVariable("id") int id, @PathVariable("athleteId") int athleteId) throws DoneExerciseNotFoundException {
+        Optional<Record> optionalRecord = recordsService.findById(id);
+        if(optionalRecord.isPresent()) {
+            Record record = optionalRecord.get();
+            model.addAttribute("record", record);
+            return "records/show";
+        } else throw new DoneExerciseNotFoundException("");
     }
 }

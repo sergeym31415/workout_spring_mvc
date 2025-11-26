@@ -2,8 +2,10 @@ package ru.meshkov.workout.services;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.meshkov.workout.models.Athlete;
 import ru.meshkov.workout.models.DoneExercise;
 import ru.meshkov.workout.models.Record;
 import ru.meshkov.workout.repositories.DoneExerciseRepository;
@@ -27,12 +29,18 @@ public class DoneExerciseService {
         this.modelMapper = modelMapper;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public List<DoneExercise> findAll() {
         return doneExerciseRepository.findAll();
     }
 
-    public Optional<DoneExercise> findById(int id) {
+    @PreAuthorize("hasRole('ADMIN') or authentication.principal.getId() == #athleteId")
+    public Optional<DoneExercise> findById(int id, int athleteId) {
         return doneExerciseRepository.findById(id);
+    }
+
+    public List<DoneExercise> findAllByAthlete(Athlete athlete) {
+        return doneExerciseRepository.findAllByAthlete(athlete);
     }
 
     @Transactional

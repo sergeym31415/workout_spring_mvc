@@ -2,6 +2,7 @@ package ru.meshkov.workout.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,8 +13,9 @@ import ru.meshkov.workout.services.AthletesService;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api")
+//Controller off
+//@RestController
+//@RequestMapping("/api")
 public class RestAthletesController {
     private final AthletesService athletesService;
     private final ModelMapper modelMapper;
@@ -27,6 +29,17 @@ public class RestAthletesController {
     @GetMapping("/athletes")
     public List<Athlete> getAthletes() {
         return athletesService.findAll();
+    }
+
+    @GetMapping("/athletese")
+    public ResponseEntity<String> getAthletese() {
+        StringBuilder stringBuilder = new StringBuilder();
+        List<Athlete> athletes = athletesService.findAll();
+        for (Athlete a :
+                athletes) {
+            stringBuilder.append(a.toString() + "\n");
+        }
+        return ResponseEntity.ok(stringBuilder.toString());
     }
 
     @GetMapping("/athletes/{id}")
