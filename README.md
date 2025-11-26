@@ -7,7 +7,7 @@ Web приложение на Spring Boot для назначения трене
 - Перейди в терминале в папку проекта и выполни  
 ```docker-compose up --build```
 ## Схема БД  
-![Схема бд](https://github.com/sergeym31415/workout_spring_mvc/blob/master/bd_diagram.JPG)
+![Схема бд](https://github.com/sergeym31415/workout_spring_mvc/blob/master/bd_schema.PNG)
 ## FAQ
 #### Как подключиться к приложению после развертывания?
 Порт 8181  
