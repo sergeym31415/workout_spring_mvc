@@ -1,0 +1,22 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="neo (generated)" id="1763724791573-9">
+        <createTable tableName="set_exercises">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="set_exercises_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(100)"/>
+            <column name="approache" type="INTEGER"/>
+            <column name="repeats" type="INTEGER"/>
+            <column name="weight" type="FLOAT8"/>
+            <column name="day_of_week" type="INTEGER"/>
+            <column name="id_exercise" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_training_program" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
