@@ -6,11 +6,14 @@ Web приложение на Spring Boot для назначения трене
 ```git clone https://github.com/sergeym31415/workout_spring_mvc.git```  
 - Перейди в терминале в папку проекта и выполни  
 ```docker-compose up --build```
+## Миграции через liquibase
 ## Схема БД  
 ![Схема бд](https://github.com/sergeym31415/workout_spring_mvc/blob/master/bd_schema.PNG)
 ## FAQ
 #### Как подключиться к приложению после развертывания?
-Порт 8181  
-логин admin  
-пароль password1  
-
+- порт 8181  
+- логин admin  
+- пароль password1  
+#### Где сменить пароль от БД?
+- liquibase.properties  
+- src/main/resources/application.properties  
